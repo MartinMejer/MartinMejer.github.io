@@ -1,5 +1,66 @@
+<!DOCTYPE html>
 <html>
-<head>
-  <title>It work?</title>
-</head>
+  <head>
+    <meta charset="utf-8">
+    <title>GCD og Euler Totienten Lommeregner</title>
+  </head>
+  <body>
+    <h1>GCD og Euler Totienten Lommeregner</h1>
+    <p>Indtast 2 tal:</p>
+    <input type="text" id="num1">
+    <br><br>
+    <input type="text" id="num2">
+    <br><br>
+    <button onclick="GCD()">GCD</button>
+    <p id="result-gcd"></p>
+    <button onclick="calculateEulerPhi()">Euler Phi</button>
+    <p id="result-euler-phi"></p>
+    <script>
+      function GCD() {
+        const num1 = BigInt(document.getElementById("num1").value);
+        const num2 = BigInt(document.getElementById("num2").value);
+
+        let a = num1 
+        let b = num2 
+
+        while (b > 0n) {
+          let temp = b;
+          b = a % b;
+          a = temp;
+        }
+
+        const gcd = a;
+        document.getElementById("result-gcd").innerHTML = `GCD af ${num1} og ${num2} er ${gcd}.`;
+      }
+
+      function calculateEulerPhi() {
+        const num1 = BigInt(document.getElementById("num1").value);
+        const num2 = BigInt(document.getElementById("num2").value);
+
+        const phi1 = eulerPhi(num1);
+        const phi2 = eulerPhi(num2);
+
+        document.getElementById("result-euler-phi").innerHTML = `Euler totienten af ${num1} er ${phi1}. Euler totienten af ${num2} er ${phi2}.`;
+      }
+
+      function eulerPhi(n) {
+        let result = n;
+
+        for (let i = 2n; i * i <= n; i++) {
+          if (n % i === 0n) {
+            while (n % i === 0n) {
+              n /= i;
+            }
+            result -= result / i;
+          }
+        }
+
+        if (n > 1n) {
+          result -= result / n;
+        }
+
+        return result;
+      }
+    </script>
+  </body>
 </html>
